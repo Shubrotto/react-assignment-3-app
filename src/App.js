@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
+import Todos from "./components/Todos";
+import NewTodo from "./components/NewTodo";
+
+const todosData = [
+  {
+    id: uuidv4(),
+    title: "read react documentation",
+    desc: "react documentation might be boring but I can do it",
+  },
+  {
+    id: uuidv4(),
+    title: "do react assignment",
+    desc: "react assignments might be boring but I can do it",
+  },
+];
 
 function App() {
+  const [todos, setTodos] = useState(todosData);
+
+  const handleAddTodo = (todo) => {
+    setTodos((prevTodo) => {
+      return [...prevTodo, todo];
+    });
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <NewTodo onAddTodo={handleAddTodo} />
+      <Todos todos={todos} />
     </div>
   );
 }
